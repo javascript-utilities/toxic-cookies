@@ -1,0 +1,61 @@
+{
+  "name": "toxic-cookies",
+  "version": "0.0.1",
+  "description": "Tools for poisoning browser cookies for currently loaded domain",
+  "main": "toxic-cookies.js",
+  "scripts": {
+    "ts-build": "tsc --build",
+    "ts-watch": "tsc --watch",
+    "ci-test": "jest --coverage",
+    "ci-build": "npm run ts-build && npm run ci-test",
+    "ci-watch": "jest --coverage --watchAll",
+    "py-serve": "python3 -m http.server --bind localhost 8080"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "jsdom",
+    "roots": [
+      "__tests__"
+    ],
+    "collectCoverageFrom": [
+      "__tests__/**.js",
+      "toxic-cookies.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    },
+    "coverageReporters": [
+      "text"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/javascript-utilities/toxic-cookies.git"
+  },
+  "keywords": [
+    "javascript",
+    "cookies"
+  ],
+  "author": "S0AndS0",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/javascript-utilities/toxic-cookies/issues"
+  },
+  "homepage": "https://github.com/javascript-utilities/toxic-cookies#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.4",
+    "@types/node": "^14.0.19",
+    "cross-blob": "^2.0.0",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.1",
+    "typescript": "^3.8.3"
+  }
+}

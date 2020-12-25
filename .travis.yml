@@ -1,0 +1,62 @@
+## Note, "[ci skio]" or "[skip ci]" within a commit message _should_
+##  cause Travis Continuous Integration to skip the following
+
+
+## Clone settings for repository
+##   1. reduce log _fluff_ with `true`
+##   2. clone submodules when cloning this branch with `true`
+##   3. clone the whole Git history with `false`, or set integer limit
+git:
+  quite: false
+  submodules: false
+  depth: false
+
+
+## The dialect that will be spoken
+##   1. really what Jest speeks
+##   2. version of `node_js` to target
+language: node_js
+node_js:
+  - "10"
+
+
+## Things to keep between CI runs
+##   keep `node_modules` subdirectory to speed up future tests, maybe?
+cache:
+  directories:
+    - node_modules
+
+
+## Operating systems to spin-up
+##   1. when `true` some blocks such as `script` terminates at first failure
+##   2. list of OS configurations (FrontMater _blocks_) Travis should test with
+matrix:
+  fast_finish: true
+  include:
+    ## Default 'dist' was 'trusty' as of 2019
+    - name: 'Linux Xenial'
+      os: linux
+      dist: xenial
+
+
+## Retrict what branches are cloned with Git
+##   1. fetch `only` `main` or _`test-`_ prefixed branches
+##   2. specifically ignore fetching the `gh-pages` branch
+branches:
+  only:
+    - main
+    - /^(?i:test)-.*$/
+  except:
+    - gh-pages
+
+
+## Install deps and run CI/Jest tests under `.ci-jest/` directory
+##   Note, `npm ci` takes the place of `npm install` to ensure
+##   all dependencies are installed, and that there are no sync
+##   bugs between `package.json` and `package-lock.json` files.
+before_install:
+  - npm update
+install:
+  - npm ci
+script:
+  - npm run ci-test
